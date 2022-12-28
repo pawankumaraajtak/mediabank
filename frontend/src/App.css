@@ -1,0 +1,353 @@
+
+:root{
+  --bodybg:#2C2C2C;
+  --primarytextcolor: #fff;
+  --secondarytextcolor: #111;
+  --primarybuttoncolor:#fdba3b;
+  --secondarybuttoncolor:#fff;
+}
+*,html,::after,::before{ margin:0; padding:0; box-sizing: border-box;}
+body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);}
+#root{height:100vh; overflow: hidden;}
+.outerBody{
+  font-family: "Google Sans",Roboto,Arial,sans-serif;display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
+.uploadBoxWrap{
+  z-index: 989;
+}
+.uploadBoxImageWrap{
+  position: absolute;
+    top: 9px;
+    width: 140px;
+    right: 10px;
+    height: 43px;
+    border-radius:30px;
+    background-color: var(--primarybuttoncolor);
+}
+.uploadBoxImageWrap .uploadImageIcons{ display: none;}
+.uploadBoxImageWrap .uploadBoxImage{ background:none;border:0px;height: 100%;}
+.uploadBoxImage:after {
+  content: "Upload New Image";
+  font-size: 13px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+.uploadBox{
+  text-align: center;
+}
+.uploadBoxImage{
+  background: rgb(248,249,250);
+  border: 1px dashed #c0c0c0;
+  border-radius: 8px;
+  text-align: center;
+}
+.uploadIcons{
+  display: inline-flex;
+  height: 180px;
+  padding-top: 16px;
+  align-items: center;
+}
+.uploadImageIcons{
+  display: inline-flex;
+  height: 10px;
+  padding-top: 16px;
+  align-items: center;
+}
+.uploadIcon{
+  margin-right: 18px;
+}
+.uploadText{
+  line-height: 25px;
+  cursor: pointer;
+}
+.uploadTextBlue{
+  color: rgb(79 151 251);
+}
+.searchBox{
+  z-index: 3;
+  height: 44px;
+  background: #efefef;
+  border: 1px solid #242424;
+  box-shadow: none;
+  border-radius: 24px;
+  margin: 0 auto;
+  width: auto;
+  text-align: right;
+  /* margin-top: 125px; */
+  display: flex;
+}
+
+.searchBox::focus{box-shadow: 0px 0 4px 2px #222222;}
+.searchBtn{
+  height: 44px;
+  width: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  flex: 0 0 auto;
+  padding: 0;
+}
+.searchIcon{
+  background: none;
+  color: #4285f4;
+  height: 24px;
+  width: 24px;
+  margin: auto;
+}
+.searchIconSpan{
+  display: inline-block;
+  fill: currentColor;
+  height: 24px;
+  line-height: 24px;
+  position: relative;
+  width: 24px;
+}
+.searchTextBox{
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+}
+.inputSearchTextBox{
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: rgba(0,0,0,.87);
+  word-wrap: break-word;
+  outline: none;
+  display: flex;
+  flex: 100%;
+  -webkit-tap-highlight-color: transparent;
+  height: 34px;
+  font-size: 16px;
+  padding: 7px 6px 2px 21px;
+}
+.uploadForm{
+  display: none;
+}
+.imageProcessWrap{
+  margin-top: 20px;
+}
+.imageProcess{
+  
+}
+.imageProcess input, .imageProcess button, .imageProcess select{
+  margin-bottom: 10px;
+  width: 100%;
+}
+.imageProcess input[type="text"]{
+  background-color:#111;
+  color:#fff;
+  padding:5px 10px;
+  border: 0px;
+  font-size: 15px;
+  border-radius: 3px;
+ border:1px solid #686868;
+}
+.imageProcess select{
+  background-color:#111 ;
+  font-size:15px;
+  color:#fff;
+  border-radius: 3px;
+ border:1px solid #686868;
+ padding:5px 10px;
+}
+.imagePreview{
+
+}
+.imageCanvas{
+  border: 1px solid #f1f1f1;
+  margin-top: 15px;
+  border-radius: 5px;
+  display: none;
+  margin-bottom: 20px;
+}
+
+.searchTextWrap{
+  color:var(--primarytextcolor);
+  margin-bottom: 17px;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.searchText{
+  font-size: 35px;
+  color: var(--primarytextcolor);
+  font-family: sans-serif;
+}
+.searchTextImg{
+  font-size: 28px;
+  margin-right: 9px;
+}
+.folder{
+  font-size: 48px;
+  cursor: pointer;
+}
+.folderName{
+  font-size: 12px;
+}
+.folderColumn{
+  margin-right: 10px;
+}
+.folderColumn a{
+  text-decoration: none;
+  color: black;
+}
+.folderColumn a:hover{
+  font-weight: bold;
+  color: black;
+}
+.folderImages{
+
+}
+.folderCol{
+  margin-bottom: 20px;
+}
+.folderImages img{
+  max-width: 100%;
+  background: #c5c5c5;
+}
+.folderBreadcrumb{
+  margin-bottom: 7px;
+}
+.footer{
+  margin-bottom: 25px;
+}
+.showError{
+  color: red;
+  font-size: 12px;
+}
+.btAlertBox{
+  margin-top: 15px;
+}
+.cropperBoxWrapHide{
+  opacity: 0;
+  height: 0;
+  z-index: -1;
+  position: relative;
+  visibility: hidden;
+}
+.navTabs{
+
+}
+.cropCheckBoxes{
+  display: flex;
+  flex-direction: column;
+    flex-basis: 115px;
+    flex-shrink: 0;
+}
+.checkbox{
+  position: absolute;
+  top:5px;
+  left: 5px;
+  display: flex;
+    font-size: 13px;
+    z-index:2;
+}
+.cropCheckBoxes .form-check{
+  position: relative;
+}
+.checkBoxImage{
+  max-width: 100%;
+}
+.cropCheckBoxes .form-check-inline{
+  min-width: 100px;
+}
+.checkbox input[type="checkbox"]{-webkit-appearance: none;
+  appearance: none;background-color:red;margin: 0;width: 1.15em;
+  height: 1.15em;
+  border-radius: 0.15em;display: grid;
+  place-content: center; margin-right: 5px;}
+  .checkbox input[type="checkbox"]::before {
+    content: "";
+  width: 0.65em;
+  height: 0.65em;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  transform: scale(0);
+  transform-origin: bottom left;
+  transition: 120ms transform ease-in-out;
+  /* Windows High Contrast Mode */
+  background-color: #fff;
+  }
+  .checkbox input[type="checkbox"]:checked{background-color:green;}
+.checkbox input[type="checkbox"]:checked::before {transform: scale(1);}
+
+/* new css update */
+.action__hero{ padding:10px;}
+.action__hero .action__elem{ text-align: right; display: flex;
+  justify-content: flex-end;}
+.action__hero .action__elem a{ background-color: var(--primarybuttoncolor); color:#fff; font-size: 14px;
+  display: flex;
+  min-width: 130px;
+  padding: 5px 13px;
+  text-decoration: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;    border-radius: 30px; line-height:1.3;}
+.action__hero .action__elem a > span{ display: block;}
+.action__hero .action__elem a > span.info__text{font-size:10px;}
+
+.hp__searchbox{ height: 100%; padding-top: 50px; max-width:700px; margin:0 auto;min-width: 700px;}
+.search__note{ font-size:13px; font-style: italic; color:#c5c5c5; line-height:1.3; padding:10px 20px 0; text-align: center;}
+
+/* drag and upload page*/
+.drag__upload__cont{ height: 100%; max-width:90%; margin:0 auto; padding-top:50px}
+.wrap{ height: 100%;}
+.uploadBoxWrap{ height: 100vh;} .uploadBox{ height: 100%;display: grid;
+  place-content: center; cursor: pointer;}
+
+.upload__page .action__hero{position:absolute; width: 100%; z-index: -1;}
+
+/* cropper css */
+.cropperBoxShow .cropper-modal{ background-color: var(--bodybg);}
+.cropper__preview{ display: flex;}
+.cropper__preview .cropperBoxWrapper{ flex-basis:980px; flex-shrink:0; margin-right:30px;}
+
+/* tabbing */
+.navTabs ul{list-style: none; display: flex;}
+.navTabs ul li a{color:#fff; text-decoration: none; background-color:#505050; padding:5px 12px; border-radius:3px 3px 0 0;display: block;}
+.navTabs ul li:not(:last-child){margin-right: 15px;}
+.cropCheckBox:hover:after{
+  content:"Preview";
+  position: absolute;
+  width: 100%;
+  height:100%;
+  top:0;
+  left:0;
+  background-color: rgba(0,0,0,.5);
+  display: grid;
+    place-content: center;
+    font-size: 14px;
+    color: #fff;
+}
+
+.navTabs ul li a.active{ background-color:green;}
+
+.imageProcessWrap{ position: absolute; width:300px; top:-20px; right: 0;background-color: #4e4e4e;
+  padding: 10px; z-index:5; height:100vh; border-radius: 8px 0 0 8px;}
+  .button-set button{
+    background-color: var(--primarybuttoncolor);
+    color:#fff;
+    padding:10px 5px;
+    text-align: center;
+    font-size:18px;
+    font-weight:700;
+    border:1px solid #e38601;
+    border-radius:5px;
+  }
+button.backbutn{ font-size: 14px;
+  color: #fff;
+  background-color: #000;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  margin-bottom: 10px;
+  float: right; cursor: pointer;}
