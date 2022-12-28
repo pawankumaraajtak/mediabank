@@ -1,0 +1,61 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependenciess
+frontend/node_modules
+backend/.pnp
+backend/.pnp.js
+frontend/node_modules
+backend/.pnp
+backend/.pnp.js
+
+#pwa
+frontend/public/sw.js
+frontend/public/workbox*
+backend/public/sw.js
+backend/public/workbox*
+
+# testing
+frontend/coverage
+backend/coverage
+
+# production
+frontend/build
+backend/build
+
+# misc
+frontend/.DS_Store
+*.pem
+backend/.DS_Store
+*.pem
+
+# debug
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+
+# local env files
+frontend/env/env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+backend/env/env.local
+backend/.env.development.local
+backend/.env.test.local
+backend/.env.production.local
+
+Dockerfile
+appspec.yml
+.gitlab-ci.yml
+
+frontend/scripts/*
+frontend/Dockerfile
+frontend/appstart.json
+frontend/package-lock.json
+
+backend/scripts/*
+backend/Dockerfile
+backend/appstart.json
+backend/package-lock.json
