@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { removeExtension } = require("../helper");
 
-exports.uniqueFilename = (dir, filename)=>{
+exports.uniqueFilename = (dir, filename, imageType)=>{
     if(dir && filename){
         let ext = filename.split(".");
         if(ext?.length>0){

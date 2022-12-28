@@ -1,10 +1,16 @@
 import React from 'react'
 
 export default function ImageProcess(props) {
+  const closeTextBox=()=>{
+    let boxWrap = document.getElementById("imageProcessWrap");
+    if(boxWrap){
+        boxWrap.classList.remove("openBox");
+    }
+}
   return (
     <>
-    <div className="imageProcessWrap">
-       <button className='backbutn'>X</button>
+    <div className="imageProcessWrap" id="imageProcessWrap">
+       <button className='backbutn' onClick={closeTextBox}>X</button>
         {/* <div className="imagePreview">
             <img src={ props?.selectedFile ? URL.createObjectURL(props?.selectedFile) : '' } />
         </div> */}

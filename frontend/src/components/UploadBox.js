@@ -12,6 +12,7 @@ import Loader from './Loader';
 import CheckBoxPreview from './CheckBoxPreview';
 import { cleanImageName, getFileExtension } from '../helpers/Helper';
 import PdfProcess from './PdfProcess';
+import PdfPreview from './PdfPreview';
 
 export default function UploadBox(props) {
 
@@ -373,11 +374,18 @@ export default function UploadBox(props) {
         const cropper = imageElement?.cropper;
         cropper.reset();
     }
+   
+    const openTextBox=()=>{
+        let boxWrap = document.getElementById("imageProcessWrap");
+        if(boxWrap){
+            boxWrap.classList.add("openBox");
+        }
+    }
 
   return (
     <div className='drag__upload__cont'>
         <div className='wrap'>
-            <div className={ image ? "uploadBoxImageWrap" : "uploadBoxWrap" }>
+            <div className={ (image ? "uploadBoxImageWrap" : (pdf ? "uploadBoxPdfWrap" : "uploadBoxWrap")) }>
                 <div className={ image ? "uploadBoxImage" : "uploadBox" } {...getRootProps()}>
                     <div className={ image ? "uploadImageIcons" : "uploadIcons" }>
                         {
@@ -430,6 +438,13 @@ export default function UploadBox(props) {
                 </div>
             }
             </div>
+
+
+            {
+                (pdf) && <PdfPreview pdf={selectedFile} />
+            }
+
+            <div className='next__stepbtn' onClick={openTextBox}>Next Step</div>
             {
                 (image || pdf) && <ImageProcess resetCropper={resetCropper} flip={flip} rotate={rotate} setImageName={setImageName} setImageAlt={setImageAlt} setImageCaption={setImageCaption} setImageKeyword={setImageKeyword} imageFolders={imageFolders} setImageFolders={setImageFolders} imageNameError={imageNameError} setImageRemarks={setImageRemarks} imageFoldersError={imageFoldersError} imageSourceError={imageSourceError} imageSource={imageSource} setImageSource={setImageSource} setImageAuthor={setImageAuthor} setImageCopyright={setImageCopyright} btnDisable={btnDisable} selectedFile={selectedFile} fileUplaod={fileUplaod} />
             }

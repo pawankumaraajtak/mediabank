@@ -1,26 +1,3 @@
-const moment = require('moment');
-
-exports.renameImage = (image)=>{
-    let imagename = "";
-    if(image){
-        let date = Date.now();
-        let dd = date.getDate();
-        let mm = date.getMonth();
-        mm++;
-        let ss = date.getSeconds(); 
-        let encodeString = moment().format('dd-mm-ss');
-        let ext = image.split(".").pop();
-        let imgNameAfterSplit = this.removeExtension(image);
-        if(imgNameAfterSplit && ext){
-            imagename = imgNameAfterSplit + '-' + encodeString;
-            imagename = imgNameAfterSplit;
-            imagename += ("."+ext);
-            imagename = imagename.toLowerCase();
-        }
-    }
-    return imagename;
-}
-
 exports.removeExtension = (filename) =>{
     if(filename){
         return filename.substring(0, filename.lastIndexOf('.')) || filename;
@@ -42,6 +19,22 @@ exports.getImageType = (filename)=>{
         return "1x1";
     }
     return "original";
+}
+
+exports.fileNameWithImageType = (filename, type)=>{
+    if(filename && type){
+        if(type!='original'){
+            let ext = filename.split(".");
+            if(ext?.length>0){
+                let extension = ext.pop();
+                let imageName = ext.join(".");
+                imageName = (imageName+'-'+type);
+                imageName += ("."+extension);
+                return imageName;
+            }
+        }
+    }
+    return filename;
 }
 
 exports.secureUrl = (url)=>{

@@ -1,14 +1,16 @@
 const express = require('express');
 const app = express();
 const multer  = require('multer');
+const moment = require('moment');
 const axios  = require('axios');
 const cors = require('cors');
 const fs = require('fs');
 const exiftool = require("exiftool-vendored").exiftool
 const bodyParser = require('body-parser');
-const { renameImage, getImageType, secureUrl } = require('./helper');
+const { getImageType, secureUrl, fileNameWithImageType } = require('./helper');
 const { uniqueFilename } = require('./lib/uniquefilename');
 const { awsUpload } = require('./lib/awsupload');
+const { renameImage } = require('./lib/renameimage');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -177,7 +179,7 @@ app.post('/upload/photos', upload.array('uploadImgInput', 5), async function (re
     // req.file is the name of your file in the form above, here 'uploaded_file'
     // req.body will hold the text fields, if there were any 
     //console.log("req", req.body);
-    //console.log("req.file", req.files);
+    console.log("req.file", req.files);
 
     let responseMsg = "Something went wrong";
 
@@ -214,35 +216,38 @@ app.post('/upload/photos', upload.array('uploadImgInput', 5), async function (re
     let totalImageTypes = [];
     if((req.files.length>0) && bodyInfo.img_folder){
 
-        const today = new Date();
-        let month = today.getMonth();
-        let year = today.getFullYear();
-        month++;
+        // const today = new Date();
+        // let month = today.getMonth();
+        // let year = today.getFullYear();
+        // month++;
+
+        let monthYear = moment().format('MM-YYYY');
         
         let tmpPath = 'public/tmp/';
-        let folderPath = 'public/'+bodyInfo.img_folder+'/'+month+'-'+year;
+        let folderPath = bodyInfo.img_folder+'/'+monthYear;
 
-        postData['img_directory'] = ("/"+ (folderPath.replace("public/", "")));
+        postData['img_directory'] = ("/"+ folderPath);
 
         for(let fileInfo of req.files){ 
             if(fileInfo.filename){
-                if(month && year){
+                if(monthYear){
 
                     let fileSize = fileInfo.size;
                     let fileName = fileInfo.filename;
                     let tmpFilePath = (tmpPath+fileName);
                     let imageType = getImageType(fileName);
-                    let imgfolderPath = (folderPath + ((imageType && imageType!="original") ? ('/'+imageType) : ''));
+                    // let imgfolderPath = (folderPath + (imageType ? ('/'+imageType) : ''));
+                    //let imgfolderPath = folderPath;
 
                     fileName = fileName.replace("_16_9", "").replace("_9_16", "").replace("_3_4", "").replace("_1_1", "");
 
-                    let newFilePath = imgfolderPath+'/'+fileName;
+                    fileName = fileNameWithImageType(fileName, imageType);
 
-                    [newFilePath, fileName] = uniqueFilename(imgfolderPath, fileName);
+                    let newFilePath = folderPath+'/'+fileName;
 
                     console.log("newFilePath", newFilePath, fileName);
 
-                    if(tmpFilePath && newFilePath && fileName && imageType && imgfolderPath){
+                    if(tmpFilePath && newFilePath && fileName && imageType && folderPath){
                         let cleanNewFilePath = ("/" + (newFilePath.replace("public/", "")));
                         if(imageType=="original"){
                             postData['img_full_url'] = cleanNewFilePath;
@@ -363,6 +368,7 @@ app.post('/upload/photos', upload.array('uploadImgInput', 5), async function (re
                                     cleanNewFilePath = cleanNewFilePathArray.join("/");
                                     if(cleanNewFilePath && uploadFileName && filePath && fileSize){
                                         let awsResponse = await awsUpload(cleanNewFilePath, uploadFileName, filePath, fileSize);
+                                        console.log("awsResponse", awsResponse)
                                         if(!awsResponse?.error){
                                             let s3_url = awsResponse?.s3_response?.public_url
                                             if(imageType && s3_url){

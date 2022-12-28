@@ -3,7 +3,7 @@
   --bodybg:#2C2C2C;
   --primarytextcolor: #fff;
   --secondarytextcolor: #111;
-  --primarybuttoncolor:#fdba3b;
+  --primarybuttoncolor:#d78d00;
   --secondarybuttoncolor:#fff;
 }
 *,html,::after,::before{ margin:0; padding:0; box-sizing: border-box;}
@@ -14,10 +14,20 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
   flex-direction: column;
   height: 100%;
 }
-
+.uploadBoxWrap ~ .next__stepbtn{ display:none;}
 
 .uploadBoxWrap{
   z-index: 989;
+}
+.uploadBoxPdfWrap{
+  position: absolute;
+    top: 9px;
+    width: 140px;
+    right: 10px;
+    height: 43px;
+    border-radius:30px;
+    background-color: var(--primarybuttoncolor);
+    cursor: pointer;
 }
 .uploadBoxImageWrap{
   position: absolute;
@@ -27,6 +37,7 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
     height: 43px;
     border-radius:30px;
     background-color: var(--primarybuttoncolor);
+    cursor: pointer;
 }
 .uploadBoxImageWrap .uploadImageIcons{ display: none;}
 .uploadBoxImageWrap .uploadBoxImage{ background:none;border:0px;height: 100%;}
@@ -222,7 +233,7 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
   margin-bottom: 25px;
 }
 .showError{
-  color: red;
+  color: #fd3e3e;
   font-size: 12px;
 }
 .btAlertBox{
@@ -309,7 +320,28 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
 /* cropper css */
 .cropperBoxShow .cropper-modal{ background-color: var(--bodybg);}
 .cropper__preview{ display: flex;}
-.cropper__preview .cropperBoxWrapper{ flex-basis:980px; flex-shrink:0; margin-right:30px;}
+.cropper__preview .cropperBoxWrapper{ flex-basis:980px; flex-shrink:0; margin-right:30px;
+  background-color: grey;
+  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.2) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.2) 75%, rgba(0, 0, 0, 0.2)), linear-gradient(45deg, rgba(0, 0, 0, 0.2) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.2) 75%, rgba(0, 0, 0, 0.2));
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+}
+
+.next__stepbtn{
+  background-color:var(--primarybuttoncolor);
+  width: 105px;
+  padding: 11px 15px;
+  position: fixed;
+  right: 10px;
+  bottom: 15px;
+  border-radius: 30px;
+  font-weight: 500;
+  text-align: center;
+  box-shadow: 0 0 4px 0 #462e01;
+  cursor: pointer;
+  transition:all 0.3s ease ;
+}
+.next__stepbtn:hover{transform: scale(1.05);}
 
 /* tabbing */
 .navTabs ul{list-style: none; display: flex;}
@@ -331,8 +363,11 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
 
 .navTabs ul li a.active{ background-color:green;}
 
-.imageProcessWrap{ position: absolute; width:300px; top:-20px; right: 0;background-color: #4e4e4e;
-  padding: 10px; z-index:5; height:100vh; border-radius: 8px 0 0 8px;}
+.imageProcessWrap{ position: fixed; width:300px; top:-20px; right:-300px;background-color: #4e4e4e;
+  padding: 10px; z-index:5; height:100vh; border-radius: 8px 0 0 8px; transition: right 0.5s linear;}
+.imageProcessWrap.openBox{
+    right:0px;
+  }
   .button-set button{
     background-color: var(--primarybuttoncolor);
     color:#fff;
@@ -351,3 +386,7 @@ button.backbutn{ font-size: 14px;
   border-radius: 100%;
   margin-bottom: 10px;
   float: right; cursor: pointer;}
+  .cropper__preview .react-loading-skeleton{
+    --base-color: #060606;
+    --highlight-color: #1a1a1a;
+  }
