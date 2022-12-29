@@ -20,6 +20,10 @@ function App() {
       element: <Upload />,
     },
     {
+      path: "/search",
+      element: <SearchPage />,
+    },
+    {
       path: "/search/:keyword",
       element: <SearchPage />,
     },

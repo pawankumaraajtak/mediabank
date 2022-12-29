@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&display=swap');
 :root{
   --bodybg:#2C2C2C;
   --primarytextcolor: #fff;
@@ -7,14 +7,13 @@
   --secondarybuttoncolor:#fff;
 }
 *,html,::after,::before{ margin:0; padding:0; box-sizing: border-box;}
-body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);}
-#root{height:100vh; overflow: hidden;}
+body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor); font-family: 'Noto Sans', sans-serif;}
+#root{height:100vh;}
 .outerBody{
-  font-family: "Google Sans",Roboto,Arial,sans-serif;display: flex;
+  display: flex;
   flex-direction: column;
   height: 100%;
 }
-.uploadBoxWrap ~ .next__stepbtn{ display:none;}
 
 .uploadBoxWrap{
   z-index: 989;
@@ -42,13 +41,15 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
 .uploadBoxImageWrap .uploadImageIcons{ display: none;}
 .uploadBoxImageWrap .uploadBoxImage{ background:none;border:0px;height: 100%;}
 .uploadBoxImage:after {
-  content: "Upload New Image";
+  content: "Browse Image";
   font-size: 13px;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
+  font-family: inherit;
+    font-weight: 500;
 }
 .uploadBox{
   text-align: center;
@@ -139,18 +140,15 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
   height: 34px;
   font-size: 16px;
   padding: 7px 6px 2px 21px;
+  font-family: inherit;
+  font-weight: 600;
 }
 .uploadForm{
   display: none;
 }
-.imageProcessWrap{
-  margin-top: 20px;
-}
-.imageProcess{
-  
-}
+
 .imageProcess input, .imageProcess button, .imageProcess select{
-  margin-bottom: 10px;
+  
   width: 100%;
 }
 .imageProcess input[type="text"]{
@@ -184,7 +182,8 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
 .searchTextWrap{
   color:var(--primarytextcolor);
   margin-bottom: 17px;
-  font-family: sans-serif;
+ 
+  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -192,7 +191,8 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
 .searchText{
   font-size: 35px;
   color: var(--primarytextcolor);
-  font-family: sans-serif;
+
+  
 }
 .searchTextImg{
   font-size: 28px;
@@ -205,9 +205,7 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
 .folderName{
   font-size: 12px;
 }
-.folderColumn{
-  margin-right: 10px;
-}
+.folderCol{ font-size: 0; aspect-ratio: 16/9;text-align: center;}
 .folderColumn a{
   text-decoration: none;
   color: black;
@@ -216,15 +214,12 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
   font-weight: bold;
   color: black;
 }
-.folderImages{
 
-}
-.folderCol{
-  margin-bottom: 20px;
-}
 .folderImages img{
   max-width: 100%;
-  background: #c5c5c5;
+  height:100%;
+  aspect-ratio: 16/9;
+  width: 100%;
 }
 .folderBreadcrumb{
   margin-bottom: 7px;
@@ -303,14 +298,23 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
   flex-direction: column;
   align-items: center;
   justify-content: center;    border-radius: 30px; line-height:1.3;}
-.action__hero .action__elem a > span{ display: block;}
-.action__hero .action__elem a > span.info__text{font-size:10px;}
+.action__hero .action__elem .upload_button{ background-color: var(--primarybuttoncolor); color:#fff; font-size: 14px;
+  display: flex;
+  min-width: 130px;
+  padding: 5px 13px;
+  text-decoration: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;    border-radius: 30px; line-height:1.3;border: 1px solid #ff9907; cursor: pointer;}
+  .action__hero .action__elem .upload_button:not(:last-child){ margin-right:15px}
+.action__hero .action__elem .upload_button > span.but__text{ display: block; font-weight:500;}
+.action__hero .action__elem .upload_button > span.info__text{font-size:10px;}
 
 .hp__searchbox{ height: 100%; padding-top: 50px; max-width:700px; margin:0 auto;min-width: 700px;}
 .search__note{ font-size:13px; font-style: italic; color:#c5c5c5; line-height:1.3; padding:10px 20px 0; text-align: center;}
 
 /* drag and upload page*/
-.drag__upload__cont{ height: 100%; max-width:90%; margin:0 auto; padding-top:50px}
+.drag__upload__cont{ height: 100%; max-width:98%; margin:0 auto; padding-top:50px}
 .wrap{ height: 100%;}
 .uploadBoxWrap{ height: 100vh;} .uploadBox{ height: 100%;display: grid;
   place-content: center; cursor: pointer;}
@@ -320,7 +324,7 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
 /* cropper css */
 .cropperBoxShow .cropper-modal{ background-color: var(--bodybg);}
 .cropper__preview{ display: flex;}
-.cropper__preview .cropperBoxWrapper{ flex-basis:980px; flex-shrink:0; margin-right:30px;
+.cropper__preview .cropperBoxWrapper{ flex-basis:980px; flex-shrink:0; margin-right:15px;
   background-color: grey;
   background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.2) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.2) 75%, rgba(0, 0, 0, 0.2)), linear-gradient(45deg, rgba(0, 0, 0, 0.2) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.2) 75%, rgba(0, 0, 0, 0.2));
   background-size: 50px 50px;
@@ -328,18 +332,7 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
 }
 
 .next__stepbtn{
-  background-color:var(--primarybuttoncolor);
-  width: 105px;
-  padding: 11px 15px;
-  position: fixed;
-  right: 10px;
-  bottom: 15px;
-  border-radius: 30px;
-  font-weight: 500;
-  text-align: center;
-  box-shadow: 0 0 4px 0 #462e01;
-  cursor: pointer;
-  transition:all 0.3s ease ;
+  display: none;
 }
 .next__stepbtn:hover{transform: scale(1.05);}
 
@@ -363,11 +356,13 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
 
 .navTabs ul li a.active{ background-color:green;}
 
-.imageProcessWrap{ position: fixed; width:300px; top:-20px; right:-300px;background-color: #4e4e4e;
+.imageProcessWrap{ position: fixed; width:230px; top:70px; right:0;background-color: var(--bodybg);
   padding: 10px; z-index:5; height:100vh; border-radius: 8px 0 0 8px; transition: right 0.5s linear;}
+  .imageProcessWrap .form-group{ margin-bottom: 10px;}
 .imageProcessWrap.openBox{
     right:0px;
   }
+  .button-set button.disabled{ opacity:0.5; cursor:auto;}
   .button-set button{
     background-color: var(--primarybuttoncolor);
     color:#fff;
@@ -375,8 +370,10 @@ body { background:var(--bodybg); font-size:100%; color: var(--primarytextcolor);
     text-align: center;
     font-size:18px;
     font-weight:700;
-    border:1px solid #e38601;
+    border: 1px solid #ff9907;
     border-radius:5px;
+    cursor: pointer;
+    
   }
 button.backbutn{ font-size: 14px;
   color: #fff;
@@ -390,3 +387,42 @@ button.backbutn{ font-size: 14px;
     --base-color: #060606;
     --highlight-color: #1a1a1a;
   }
+
+  .more-formgroup{ display: none;}
+  .open-more{ margin-bottom:10px; position: relative; cursor: pointer;}
+  .open-more::after{ content:""; height: 1px; width:calc(100% - 14px); line-height:0; background-color:#fff; position: absolute; top:50%; left: 0; transform: translateY(-50%);}
+  .open-more::before{
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #fff;
+    top: 10px;
+    z-index: 2;
+    right: 0;}
+  .open-more span{ font-size:13px; position: relative; z-index: 1; background-color: var(--bodybg); padding-right: 5px;}
+
+  .copyimge-url{ font-size:12px; display: flex; flex-wrap: nowrap;align-items: center;}
+  .copyimge-url:not(:last-child){ margin-bottom: 5px;}
+  .originalurl{ white-space: nowrap; border:1px solid #686868; padding:5px; background-color:#111; border-radius: 3px; width:150px; overflow-x: auto; margin-left:5px;}
+  .originalurl::-webkit-scrollbar {
+    height: 0;
+  }
+  .copyimge-url .svg-copy{margin-left: 5px;display: flex;}
+  .copyimge-url .svg-copy svg{ width:28px; height:28px;}
+
+
+  /* Search page */
+  .folderImages{ display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); grid-gap:15px; width: 97%;margin: 0 auto;}
+  .searchbox__page{ width:97%; margin:20px auto 20px; display: flex; align-items: center;}
+  .searchpage-logo svg{ width:35px; height:35px;}.searchpage-logo{ margin-right:10px;}
+  .searchbox__page form{ flex:1 0 0;}
+
+
+  .action__btn{ display: flex; justify-content:center; align-items: center; padding-top: 5px;}
+  .action__btn span{ background-color:#000; width:48px; height:28px;     display: flex;
+    justify-content: center; align-items: center; cursor: pointer; border-radius: 3px;}
+    .action__btn span:not(:last-child){ margin-right:5px}
+  .action__btn span svg{ width:22px; height: 22px; fill:#fff;}

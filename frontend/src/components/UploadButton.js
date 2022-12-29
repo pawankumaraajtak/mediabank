@@ -8,7 +8,9 @@ export default function UploadButton(props) {
     <div className='action__hero'>
     <div className='action__elem'>
     {/* <Link to={ (props?.folderId) ?  "/upload/"+props?.folderId : "/folders"}><button type="button" className="btn btn-warning">{ props?.text ?? "Upload" }</button></Link> */}
-    <Link to="/upload"><span className='but__text'>Upload Media</span><span className='info__text'>jpeg, png, gif, pdf</span></Link>
+    {/* <Link to="/upload"><span className='but__text'>Upload Media</span><span className='info__text'>jpeg, png, gif, pdf</span></Link> */}
+    <div className='upload_button'><span className='but__text'>Upload PDF</span></div>
+    <div className='upload_button'><span className='but__text'>Upload Media</span><span className='info__text'>jpeg, png, gif</span></div>
     </div>
     </div>
   )

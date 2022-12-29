@@ -19,7 +19,7 @@ export default function SearchForm(props) {
         <form action="" method="GET" role="search" onSubmit={searchQuery}>
         <div className='searchBox'>
             <div className='searchTextBox'>
-            <input ref={inputRef} type="search" className="inputSearchTextBox" title="Search" defaultValue={props?.keyword} />
+            <input ref={inputRef} type="search" className="inputSearchTextBox" title="Search" defaultValue={props?.keyword} placeholder="Search image...." />
             </div>
             <button type="submit" className='searchBtn'>
                 <div className='searchIcon'>

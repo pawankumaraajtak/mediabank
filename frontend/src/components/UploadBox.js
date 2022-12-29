@@ -444,20 +444,8 @@ export default function UploadBox(props) {
                 (pdf) && <PdfPreview pdf={selectedFile} />
             }
 
-            <div className='next__stepbtn' onClick={openTextBox}>Next Step</div>
             {
-                (image || pdf) && <ImageProcess resetCropper={resetCropper} flip={flip} rotate={rotate} setImageName={setImageName} setImageAlt={setImageAlt} setImageCaption={setImageCaption} setImageKeyword={setImageKeyword} imageFolders={imageFolders} setImageFolders={setImageFolders} imageNameError={imageNameError} setImageRemarks={setImageRemarks} imageFoldersError={imageFoldersError} imageSourceError={imageSourceError} imageSource={imageSource} setImageSource={setImageSource} setImageAuthor={setImageAuthor} setImageCopyright={setImageCopyright} btnDisable={btnDisable} selectedFile={selectedFile} fileUplaod={fileUplaod} />
-            }
-
-            {
-                (uploadSuccess && uploadSuccess?.length>0) &&
-                uploadSuccess.map((result, key)=>{
-                    return <div key={key} className='btAlertBox'>
-                                <div className="alert alert-success" role="alert">
-                                    {result}
-                                </div>
-                            </div>
-                })
+                (image || pdf) && <ImageProcess resetCropper={resetCropper} flip={flip} rotate={rotate} setImageName={setImageName} setImageAlt={setImageAlt} setImageCaption={setImageCaption} setImageKeyword={setImageKeyword} imageFolders={imageFolders} setImageFolders={setImageFolders} imageNameError={imageNameError} setImageRemarks={setImageRemarks} imageFoldersError={imageFoldersError} imageSourceError={imageSourceError} imageSource={imageSource} setImageSource={setImageSource} setImageAuthor={setImageAuthor} setImageCopyright={setImageCopyright} btnDisable={btnDisable} selectedFile={selectedFile} fileUplaod={fileUplaod} uploadSuccess={uploadSuccess} />
             }
         </div>
     </div>
