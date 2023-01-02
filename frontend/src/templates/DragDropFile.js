@@ -1,10 +1,12 @@
 import React from 'react'
 import UploadBox from '../components/UploadBox'
 import MainLayout from '../layouts/MainLayout'
+import UploadButton from '../components/UploadButton';
 import { useLocation } from 'react-router-dom';
 import RightNav from '../components/RightNav';
+import DragBox from '../components/DragBox';
 
-export default function Upload(props) {
+export default function DragDropFile(props) {
 
     const location = useLocation();
     //console.log("location", location)
@@ -12,7 +14,7 @@ export default function Upload(props) {
   return (
     <MainLayout>
        <div className='upload__page'><RightNav /></div>
-        <UploadBox selectedFile={location?.state?.selectedFile} />
+        <DragBox selectedFile={location?.state?.selectedFile} />
     </MainLayout>
   )
 }

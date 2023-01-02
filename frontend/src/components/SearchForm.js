@@ -5,6 +5,7 @@ import SearchIcon from '../svg/SearchIcon';
 
 export default function SearchForm(props) {
 
+    console.count("search form component render");
     const inputRef = useRef(null);
     const navigate = useNavigate();
     const searchQuery = (e)=>{

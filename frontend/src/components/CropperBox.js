@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
-export default function CropperBox({image, cropperRef, setCropper, cropRatio}) {
+function CropperBox({image, imageWidth, imageHeight, cropperRef, setCropper, cropRatio}) {
+
+  console.count("cropper render");
+
   return (
     <>
     {
         (image) &&
         <Cropper
             ref={cropperRef}
-            style={{ height: 550, width: "100%", }}
+           // style={{ height: imageHeight, width: "100%",  }}
+           style={{ maxWidth: "100%"  }}
             // zoomTo={0.5}
             //initialAspectRatio={cropRatio}
             aspectRatio={cropRatio}
@@ -36,3 +40,5 @@ export default function CropperBox({image, cropperRef, setCropper, cropRatio}) {
     </>
   )
 }
+
+export default memo(CropperBox);

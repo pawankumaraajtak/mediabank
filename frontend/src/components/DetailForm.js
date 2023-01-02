@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { memo } from 'react'
 
-export default function ImageProcess(props) {
+function DetailForm(props) {
 
 //   const closeTextBox=()=>{
 //     let boxWrap = document.getElementById("imageProcessWrap");
@@ -8,6 +8,8 @@ export default function ImageProcess(props) {
 //         boxWrap.classList.remove("openBox");
 //     }
 // }
+
+   console.count("detail form render");
 
   const openTextBox=()=>{
     let openMore = document.getElementById("open-more");
@@ -107,3 +109,5 @@ export default function ImageProcess(props) {
     </>
   )
 }
+
+export default memo(DetailForm);

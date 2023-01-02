@@ -8,6 +8,9 @@ import ImagebankLogo from '../svg/ImagebankLogo';
 import SearchForm from './SearchForm';
 
 export default function SearchBox() {
+
+  console.count("searchbox component render");
+
   return (
     <div className='hp__searchbox'>
         <div className='search__container'>
@@ -17,7 +20,7 @@ export default function SearchBox() {
         </div>
         <SearchForm />
         </div>
-        <div className='search__note'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+        <div className='search__note'>Search and Download Media, Graphics & Documents from India Today Group’s Repository.</div>
     </div>
   )
 }

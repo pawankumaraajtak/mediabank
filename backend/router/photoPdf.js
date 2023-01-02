@@ -107,17 +107,20 @@ router.post('/', upload.array('uploadImgInput', 1), async function (req, res, ne
                                     cleanNewFilePath = cleanNewFilePathArray.join("/");
                                     if(cleanNewFilePath && uploadFileName && filePath && fileSize){
                                         let awsResponse = await awsUpload(cleanNewFilePath, uploadFileName, filePath, fileSize);
-                                        //console.log("awsResponse", awsResponse);
+                                        console.log("awsResponse", awsResponse);
                                         if(!awsResponse?.error){
                                             let s3_url = awsResponse?.s3_response?.public_url
                                             if(s3_url){
                                                 fs.unlinkSync(tmpFilePath);
                                                 const response = await axios.post('http://localhost/esearch/esearch-simpleapi/httpdocs/put/image-bank/', postData);
-                                                //console.log("responseData", response)
+                                                console.log("responseData", response)
                                                 if(response && response?.data){
                                                     let message = response?.data?.message;
                                                     if(!message.errors){
-                                                        responseMsg = JSON.stringify(["pdf saved, url - "+s3_url]);
+                                                        responseMsg = JSON.stringify([{
+                                                            imageType: 'Pdf',
+                                                            s3_url: s3_url
+                                                        }]);
                                                     }
                                                     else{
                                                         responseMsg = JSON.stringify(message?.items);

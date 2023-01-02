@@ -1,17 +1,30 @@
 import React from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function UploadButton(props) {
+
+  const navigate = useNavigate();
+
+  const handleClick = ()=>{
+    if(props?.uploadType=="link"){
+      let link = props?.link;
+      if(link){
+        navigate('/'+link);
+      }
+    }
+    else{
+        props?.selectFile(props?.type);
+    }
+  }
+
   return (
-    <div className='action__hero'>
-    <div className='action__elem'>
-    {/* <Link to={ (props?.folderId) ?  "/upload/"+props?.folderId : "/folders"}><button type="button" className="btn btn-warning">{ props?.text ?? "Upload" }</button></Link> */}
-    {/* <Link to="/upload"><span className='but__text'>Upload Media</span><span className='info__text'>jpeg, png, gif, pdf</span></Link> */}
-    <div className='upload_button'><span className='but__text'>Upload PDF</span></div>
-    <div className='upload_button'><span className='but__text'>Upload Media</span><span className='info__text'>jpeg, png, gif</span></div>
+    <>
+    <div className='upload_button' onClick={()=> handleClick()}>
+      <span className='but__text'>{props?.text}</span>
+      {
+        props?.shortInfo && <span className='info__text'>{props?.shortInfo}</span>
+      }
     </div>
-    </div>
+    </>
   )
 }

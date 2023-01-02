@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 
-export default function PdfPreview({pdf}) {
+function PdfPreview({pdf}) {
+
+  console.count("PDF preview form render");
+
   return (
     <div className='pdfPreview'>
         <embed  
@@ -12,3 +15,5 @@ export default function PdfPreview({pdf}) {
     </div>
   )
 }
+
+export default memo(PdfPreview);

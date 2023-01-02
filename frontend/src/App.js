@@ -7,6 +7,8 @@ import Folders from './templates/Folders';
 import Folder from './components/Folder';
 import Upload from './templates/Upload';
 import SearchPage from './templates/SearchPage';
+import Upload2 from './templates/Upload2';
+import DragDropFile from './templates/DragDropFile';
 
 function App() {
 
@@ -16,8 +18,20 @@ function App() {
       element: <HomePage />,
     },
     {
+      path: "/upload2",
+      element: <Upload2 />,
+    },
+    {
       path: "/upload",
       element: <Upload />,
+    },
+    {
+      path: "/upload-image",
+      element: <DragDropFile />,
+    },
+    {
+      path: "/upload-pdf",
+      element: <DragDropFile />,
     },
     {
       path: "/search",

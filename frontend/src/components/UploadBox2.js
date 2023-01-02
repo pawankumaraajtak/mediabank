@@ -1,19 +1,24 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import {useDropzone} from 'react-dropzone';
+import UploadIcon from '../svg/UploadIcon';
 import axios from 'axios';
+import ImageProcess from './ImageProcess';
+import { dataURItoBlob } from "../utils";
 import CropperBox from './CropperBox';
 import CropperTabs from './CropperTabs';
+import Loader from './Loader';
 import CheckBoxPreview from './CheckBoxPreview';
 import { cleanImageName, getFileExtension } from '../helpers/Helper';
+import PdfProcess from './PdfProcess';
 import PdfPreview from './PdfPreview';
-import DetailForm from './DetailForm';
 
-export default function UploadBox(props) {
+export default function UploadBox2(props) {
 
-    const navigate = useNavigate();
+    const validFileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+    const [fileTypeError, setFileTypeError] = useState(null);
     const [selectedFile, setSelectedFiles] = useState(null);
-    const [cropBoxWidth, setCropBoxWidth] = useState("10");
-    const [cropBoxHeight, setCropBoxHeight] = useState("10");
     const [imageName, setImageName] = useState('');
     const [imageAlt, setImageAlt] = useState('');
     const [imageCaption, setImageCaption] = useState('');
@@ -43,24 +48,6 @@ export default function UploadBox(props) {
     const cropperRef_9_16 = useRef(null);
     const cropperRef_3_4 = useRef(null);
     const cropperRef_1_1 = useRef(null);
-
-    useEffect(()=>{
-        let file = props?.selectedFile;
-        if(file){
-            //console.log("file", file)
-            resetState();
-            setSelectedFiles(file);
-            if(file?.type=='application/pdf'){
-                setPdf(file);
-            }
-            else{
-                fixImageToCanvas(file);
-            }
-        }
-        else{
-            navigate("/upload-image");
-        }
-    }, [props?.selectedFile]);
 
     useEffect(()=>{
         if(image && cropper){
@@ -93,9 +80,36 @@ export default function UploadBox(props) {
         }
     }, [startUploading]);
 
+    const onDrop = useCallback(acceptedFiles => {
+        if(acceptedFiles?.[0]){
+            //console.log("acceptedFiles", acceptedFiles);
+            if(validFileTypes.includes(acceptedFiles?.[0]?.type)){
+                resetState();
+                setSelectedFiles(acceptedFiles[0]);
+                if(acceptedFiles?.[0]?.type=='application/pdf'){
+                    setPdf(acceptedFiles[0]);
+                }
+                else{
+                    fixImageToCanvas(acceptedFiles[0]);
+                }
+            }else{
+                setFileTypeError(true);
+            }
+        }
+        // Do something with the files
+    }, []);
+
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({
+        onDrop,
+        accept: {
+            'image/png': [],
+            'image/jpeg': [],
+            'image/jpg': [],
+            'application/pdf': []
+        }
+    });
+
     const resetState = ()=>{
-        setPdf(null);
-        setImage(null);
         setImageName('');
         setImageAlt('');
         setImageCaption('');
@@ -125,8 +139,6 @@ export default function UploadBox(props) {
             reader.addEventListener("loadend", function(arg) {
                 var src_image = new Image();
                 src_image.onload = function() {
-                    // console.log("canvas.width", canvas, src_image);
-                    // context.drawImage(src_image, 20, 20);    
                     var hRatio = canvas.width  / src_image.width;
                     var vRatio =  canvas.height / src_image.height;
                     var ratio  = Math.min (hRatio, vRatio);
@@ -135,8 +147,6 @@ export default function UploadBox(props) {
                     context.clearRect(0,0,canvas.width, canvas.height);
                     context.drawImage(src_image, 0, 0, src_image.width, src_image.height,
                     centerShift_x,centerShift_y,src_image.width*ratio, src_image.height*ratio);
-                    setCropBoxWidth(src_image.width);
-                    setCropBoxHeight(src_image.height);
                     setImage(reader.result);
                 }
                 src_image.src = this.result;
@@ -166,7 +176,46 @@ export default function UploadBox(props) {
         setImageFoldersError(null);
         setImageSourceError(null);
         setImageNameError(null);
+        setFileTypeError(null);
     }
+
+    // const singleFileUploads = async ()=>{
+    //     const imageElement = cropperRef_16_9?.current;
+    //     const cropper = imageElement?.cropper;
+    //     const imageDataUrl = cropper.getCroppedCanvas().toDataURL();
+    //     const img = dataURItoBlob(imageDataUrl);
+    //     if(!imageFolders){
+    //         setImageFoldersError(true);
+    //     }
+    //     if(img && imageFolders){
+    //         const formData = new FormData();
+    //         let extension = "png";
+    //         let imageNewName = "output.png";
+    //         if(extension && imageName){
+    //             imageNewName = imageName+"."+extension;
+    //         }
+    //         formData.append("uploadImgInput", img, imageNewName);
+    //         formData.append("imageName", imageName);
+    //         formData.append("imageAlt", imageAlt);
+    //         formData.append("imageTitle", imageTitle);
+    //         formData.append("imageKeyword", imageKeyword);
+    //         formData.append("folderId", imageFolders);
+    //         let response = await axios.post(process.env.REACT_APP_API_URL+'upload/photos', formData);
+    //         console.log("response", response)
+    //         if(response?.status=="200"){
+    //             setUploadSuccess(true);
+    //         }
+    //     }
+    // }
+
+    // const getImageFromCropper = (cropperRef)=>{
+    //     const imageDataUrl = getImageUrlFromCropper(cropperRef);
+    //     if(imageDataUrl){
+    //         const img = dataURItoBlob(imageDataUrl);
+    //         return img;
+    //     }
+    //     return '';
+    // }
 
     const getImageUrlFromCropper = (cropperRef)=>{
         const imageElement = cropperRef?.current;
@@ -336,6 +385,23 @@ export default function UploadBox(props) {
   return (
     <div className='drag__upload__cont'>
         <div className='wrap'>
+            <div className={ (image ? "uploadBoxImageWrap" : (pdf ? "uploadBoxPdfWrap" : "uploadBoxWrap")) }>
+                <div className={ image ? "uploadBoxImage" : "uploadBox" } {...getRootProps()}>
+                    <div className={ image ? "uploadImageIcons" : "uploadIcons" }>
+                        {
+                            (!image) && <div className='uploadIcon'><UploadIcon /></div>
+                        }
+                        <div className='uploadText'>Drag an image here or
+                        <span className='uploadTextBlue'> upload a file</span></div>
+                    </div>
+                </div>
+            </div>
+            { fileTypeError && <label className='showError'>Only jpeg, png, pdf are supported</label> }
+            <div className='uploadForm'>
+                <form name="uploadImageFrm" encType="multipart/form-data" method="POST" action="">
+                    <input {...getInputProps()} id="uploadImgInput" name="uploadImgInput" type="file" accept="image/bmp,image/heic,image/heif,image/jpeg,image/png,image/tiff,image/webp,image/x-icon"/>
+                </form>
+            </div>
 
             <canvas id="imageCanvas_16_9" className='imageCanvas' width="650" height="300"></canvas>
             <canvas id="imageCanvas_9_16" className='imageCanvas' width="650" height="300"></canvas>
@@ -347,23 +413,20 @@ export default function UploadBox(props) {
                 <CropperTabs cropRatio={cropRatio} setCropRatio={setCropRatio}/>
             }
             <div className='cropper__preview'>
-            {
-                image &&
-                <div className='cropperBoxWrapper'>
-                <div className={ ( cropRatio=='16/9' ? 'cropperBoxShow' : 'cropperBoxWrapHide' ) }>
-                    <CropperBox image={image} imageWidth={cropBoxWidth} imageHeight={cropBoxHeight} cropperRef={cropperRef_16_9} setCropper={setCropper} cropRatio={16/9} />  
-                </div>
-                <div className={ ( cropRatio=='9/16' ? 'cropperBoxShow' : 'cropperBoxWrapHide' ) }>
-                    <CropperBox image={image} imageWidth={cropBoxWidth} imageHeight={cropBoxHeight} cropperRef={cropperRef_9_16} setCropper={setCropper} cropRatio={9/16} />
-                </div>
-                <div className={ ( cropRatio=='3/4' ? 'cropperBoxShow' : 'cropperBoxWrapHide' ) }>
-                    <CropperBox image={image} imageWidth={cropBoxWidth} imageHeight={cropBoxHeight} cropperRef={cropperRef_3_4} setCropper={setCropper} cropRatio={3/4} />
-                </div>
-                <div className={ ( cropRatio=='1/1' ? 'cropperBoxShow' : 'cropperBoxWrapHide' ) }>
-                    <CropperBox image={image} imageWidth={cropBoxWidth} imageHeight={cropBoxHeight} cropperRef={cropperRef_1_1} setCropper={setCropper} cropRatio={1/1} />
-                </div>
-                </div>
-            }
+            <div className='cropperBoxWrapper'>
+            <div className={ ( cropRatio=='16/9' ? 'cropperBoxShow' : 'cropperBoxWrapHide' ) }>
+                <CropperBox image={image} cropperRef={cropperRef_16_9} setCropper={setCropper} cropRatio={16/9} />  
+            </div>
+            <div className={ ( cropRatio=='9/16' ? 'cropperBoxShow' : 'cropperBoxWrapHide' ) }>
+                <CropperBox image={image} cropperRef={cropperRef_9_16} setCropper={setCropper} cropRatio={9/16} />
+            </div>
+            <div className={ ( cropRatio=='3/4' ? 'cropperBoxShow' : 'cropperBoxWrapHide' ) }>
+                <CropperBox image={image} cropperRef={cropperRef_3_4} setCropper={setCropper} cropRatio={3/4} />
+            </div>
+            <div className={ ( cropRatio=='1/1' ? 'cropperBoxShow' : 'cropperBoxWrapHide' ) }>
+                <CropperBox image={image} cropperRef={cropperRef_1_1} setCropper={setCropper} cropRatio={1/1} />
+            </div>
+            </div>
 
             {
                 image &&
@@ -374,15 +437,16 @@ export default function UploadBox(props) {
                     <CheckBoxPreview id="inlineCheckbox_1_1" value="option4" type="1:1" previewUrl={image1_1_Preview}/>
                 </div>
             }
-            
+            </div>
+
+
             {
                 (pdf) && <PdfPreview pdf={selectedFile} />
             }
-            {
-                (image || pdf) && <DetailForm resetCropper={resetCropper} flip={flip} rotate={rotate} setImageName={setImageName} setImageAlt={setImageAlt} setImageCaption={setImageCaption} setImageKeyword={setImageKeyword} imageFolders={imageFolders} setImageFolders={setImageFolders} imageNameError={imageNameError} setImageRemarks={setImageRemarks} imageFoldersError={imageFoldersError} imageSourceError={imageSourceError} imageSource={imageSource} setImageSource={setImageSource} setImageAuthor={setImageAuthor} setImageCopyright={setImageCopyright} btnDisable={btnDisable} selectedFile={selectedFile} fileUplaod={fileUplaod} uploadSuccess={uploadSuccess} />
-            }
 
-            </div>
+            {
+                (image || pdf) && <ImageProcess resetCropper={resetCropper} flip={flip} rotate={rotate} setImageName={setImageName} setImageAlt={setImageAlt} setImageCaption={setImageCaption} setImageKeyword={setImageKeyword} imageFolders={imageFolders} setImageFolders={setImageFolders} imageNameError={imageNameError} setImageRemarks={setImageRemarks} imageFoldersError={imageFoldersError} imageSourceError={imageSourceError} imageSource={imageSource} setImageSource={setImageSource} setImageAuthor={setImageAuthor} setImageCopyright={setImageCopyright} btnDisable={btnDisable} selectedFile={selectedFile} fileUplaod={fileUplaod} uploadSuccess={uploadSuccess} />
+            }
         </div>
     </div>
   )

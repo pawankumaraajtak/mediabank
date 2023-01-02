@@ -222,7 +222,11 @@ router.post('/', upload.array('uploadImgInput', 5), async function (req, res, ne
                                             let s3_url = awsResponse?.s3_response?.public_url
                                             if(imageType && s3_url){
                                                 fs.unlinkSync(tmpFilePath);
-                                                totalImageTypes.push(imageType+" image saved, url - "+s3_url);
+                                                // totalImageTypes.push(imageType+" image saved, url - "+s3_url);
+                                                totalImageTypes.push({
+                                                    imageType: imageType,
+                                                    s3_url: s3_url
+                                                });
                                             }
                                         }
                                         // let result = fs.renameSync(tmpFilePath, newFilePath);
