@@ -59,3 +59,4 @@ backend/scripts/*
 backend/Dockerfile
 backend/appstart.json
 backend/package-lock.json
+backend/public/tmp/*

@@ -2,20 +2,30 @@ var router = require('express').Router();
 const axios  = require('axios');
 
 router.get('/', async function (req, res, next) {
-    let {keyword} = req.params;
+    let query = req.query;
     let result = {
         type: 'error',
         message: 'Something went wrong'
     }
     let apiUrl = 'http://localhost/esearch/esearch-simpleapi/httpdocs/search_image_bank.php';
-    if(keyword){
-        apiUrl += ("?keyword="+keyword);
+    apiUrl += "?test=test";
+    if(query?.q){
+        apiUrl += ("&img_name="+query?.q);
     }
+    if(query?.type){
+        apiUrl += ("&content_type="+query?.type);
+    }
+
+
+    // if(keyword){
+    //     apiUrl += ("?keyword="+keyword);
+    // }
+    console.log("apiUrl", apiUrl)
     const response = await axios.get(apiUrl);
     if(response){
         //console.log("response", response)
         if(response?.data?.data){
-            //console.log("response", response.data)
+            console.log("response", response.data)
             result = {
                 type: 'success',
                 message: response?.data?.data

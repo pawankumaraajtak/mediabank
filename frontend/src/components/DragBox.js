@@ -23,12 +23,18 @@ export default function DragBox(props) {
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({
         onDrop,
-        accept: {
-            'image/png': [],
-            'image/jpeg': [],
-            'image/jpg': [],
-            'application/pdf': []
-        }
+        accept: (
+            (props?.type=='image') ? 
+            {
+                'image/png': [],
+                'image/jpeg': [],
+                'image/jpg': [],
+            }
+            : 
+            {
+                'application/pdf': []
+            }
+        ),
     });
 
   return (
@@ -38,7 +44,7 @@ export default function DragBox(props) {
                 <div className="uploadBox" {...getRootProps()}>
                     <div className="uploadIcons">
                         <div className='uploadIcon'><UploadIcon /></div>
-                        <div className='uploadText'>Drag an image here or
+                        <div className='uploadText'>Drag an { (props?.type=='image') ? 'image' : 'pdf' } here or
                         <span className='uploadTextBlue'> upload a file</span></div>
                     </div>
                 </div>

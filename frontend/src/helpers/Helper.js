@@ -22,3 +22,22 @@ export const cleanImageName = (imageName)=>{
     }
     return imageName;
 }
+
+export const getQueryString = (url)=>{
+    let queryString = [];
+    if(url){
+        url = url?.replace("?", "");
+        url = url?.split("&");
+        if(url && url?.length>0){
+            for(let query of url){
+                query = query.split("=");
+                if(query && query?.length>0){
+                    if(query?.[0] && query?.[1]){
+                        queryString[query[0]] = query[1];
+                    }
+                }
+            }
+        }
+    }
+    return queryString;
+}

@@ -21,9 +21,14 @@ export default function RightNav(props) {
     }
   }
 
-  let uploadType = "link";
-  if(location?.pathname?.includes("/upload-image") || location?.pathname?.includes("/upload-pdf")){
-    uploadType = "upload";
+  let imageUploadType = "link";
+  let pdfUploadType = "link";
+
+  if(location?.pathname?.includes("/upload-image")){
+    imageUploadType = "upload";
+  }
+  else if(location?.pathname?.includes("/upload-pdf")){
+    pdfUploadType = "upload";
   }
 
   return (
@@ -38,8 +43,8 @@ export default function RightNav(props) {
       (location?.pathname?.includes("/upload")) && <SearchButton />
     }
 
-    <UploadButton selectFile={selectFile} type="pdf" text="Upload PDF" link="upload-pdf" uploadType={uploadType} />
-    <UploadButton selectFile={selectFile} type="image" text="Upload Media" link="upload-image" shortInfo="jpeg, png, gif" uploadType={uploadType} />
+    <UploadButton selectFile={selectFile} type="pdf" text="Upload PDF" link="upload-pdf" uploadType={pdfUploadType} />
+    <UploadButton selectFile={selectFile} type="image" text="Upload Media" link="upload-image" shortInfo="jpeg, png, gif" uploadType={imageUploadType} />
 
     </div>
     </div>

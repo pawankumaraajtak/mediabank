@@ -14,7 +14,7 @@ export default function DragDropFile(props) {
   return (
     <MainLayout>
        <div className='upload__page'><RightNav /></div>
-        <DragBox selectedFile={location?.state?.selectedFile} />
+        <DragBox type={props?.type} selectedFile={location?.state?.selectedFile} />
     </MainLayout>
   )
 }

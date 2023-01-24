@@ -12,11 +12,12 @@ export default function SearchForm(props) {
         e.preventDefault();
         let keyword = inputRef?.current?.value;
         if(keyword){
-            navigate("/search/"+keyword);
+            navigate("/search?q="+keyword);
         }
     }
 
   return (
+    <>
         <form action="" method="GET" role="search" onSubmit={searchQuery}>
         <div className='searchBox'>
             <div className='searchTextBox'>
@@ -31,5 +32,6 @@ export default function SearchForm(props) {
             </button>
         </div>
         </form>
+    </>
   )
 }

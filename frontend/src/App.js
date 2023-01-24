@@ -27,20 +27,20 @@ function App() {
     },
     {
       path: "/upload-image",
-      element: <DragDropFile />,
+      element: <DragDropFile type="image" />,
     },
     {
       path: "/upload-pdf",
-      element: <DragDropFile />,
+      element: <DragDropFile type="pdf" />,
     },
     {
       path: "/search",
       element: <SearchPage />,
     },
-    {
-      path: "/search/:keyword",
-      element: <SearchPage />,
-    },
+    // {
+    //   path: "/search/:keyword",
+    //   element: <SearchPage />,
+    // },
     // {
     //   path: "/folders",
     //   element: <Folders />,

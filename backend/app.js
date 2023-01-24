@@ -15,7 +15,8 @@ app.use(express.static('public'));
 
 app.use("/upload/photos", photoUpload);
 app.use("/upload/pdf", photoPdf);
-app.use("/search/:keyword?", search);
+app.use("/search", search);
+//app.get("/search/:keyword?", search);
 
 var server = app.listen(3005, function () {  
     var host = server.address().address  
